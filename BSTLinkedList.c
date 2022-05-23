@@ -14,11 +14,14 @@ int search(struct BstNode *ptr,int data);
 void insert(struct BstNode **ptr,int data);
 void newnode(struct BstNode **ptr,int data);
 
+int findheight (struct BstNode *ptr);
+
 int main(){
     struct BstNode *p_head=NULL;
     insert(&p_head,10);
     insert(&p_head,8);
     insert(&p_head,9);
+    printf("height = %d", findheight(p_head));
     return 1;
 }
 
@@ -37,4 +40,10 @@ void newnode(struct BstNode **ptr,int data){
     (*ptr)->data=data;
     (*ptr)->left=NULL;
     (*ptr)->right=NULL;
+}
+int findheight(struct BstNode *ptr){
+    if(ptr==NULL){
+        return -1;
+    }
+    return 1+(findheight(ptr->left)>findheight(ptr->right)?findheight(ptr->left):findheight(ptr->right));
 }
