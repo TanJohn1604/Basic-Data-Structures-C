@@ -13,15 +13,17 @@ struct BstNode
 int search(struct BstNode *ptr,int data);
 void insert(struct BstNode **ptr,int data);
 void newnode(struct BstNode **ptr,int data);
-
 int findheight (struct BstNode *ptr);
+void preorder(struct BstNode *ptr);
+void inorder(struct BstNode *ptr);// tìm theo thứ tự từ nhỏ tới lớn
+void postorder(struct BstNode *ptr);
 
 int main(){
     struct BstNode *p_head=NULL;
     insert(&p_head,10);
     insert(&p_head,8);
     insert(&p_head,9);
-    printf("height = %d", findheight(p_head));
+
     return 1;
 }
 
@@ -46,4 +48,28 @@ int findheight(struct BstNode *ptr){
         return -1;
     }
     return 1+(findheight(ptr->left)>findheight(ptr->right)?findheight(ptr->left):findheight(ptr->right));
+}
+void preorder(struct BstNode *ptr){
+    if(ptr==NULL){
+        return;
+    }
+    printf("%d ",ptr->data);
+    preorder(ptr->left);
+    preorder(ptr->right);
+}
+void inorder(struct BstNode *ptr){
+    if(ptr==NULL){
+        return;
+    }
+    preorder(ptr->left);
+    printf("%d ",ptr->data);
+    preorder(ptr->right);
+}
+void postorder(struct BstNode *ptr){
+    if(ptr==NULL){
+        return;
+    }
+    preorder(ptr->left);
+    preorder(ptr->right);
+    printf("%d ",ptr->data);
 }
