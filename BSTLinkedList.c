@@ -17,13 +17,16 @@ int findheight (struct BstNode *ptr);
 void preorder(struct BstNode *ptr);
 void inorder(struct BstNode *ptr);// tìm theo thứ tự từ nhỏ tới lớn
 void postorder(struct BstNode *ptr);
+int IsBST(struct BstNode *ptr);
+int IsSubLess(struct BstNode *ptr,int data);
+int IsSubGreater(struct BstNode *ptr,int data);
 
 int main(){
     struct BstNode *p_head=NULL;
     insert(&p_head,10);
     insert(&p_head,8);
     insert(&p_head,9);
-
+    printf("true or false %d",IsBST(p_head));
     return 1;
 }
 
@@ -72,4 +75,42 @@ void postorder(struct BstNode *ptr){
     preorder(ptr->left);
     preorder(ptr->right);
     printf("%d ",ptr->data);
+}
+int IsBST(struct BstNode *ptr){
+    if(ptr==NULL){
+        return 1;
+    }
+    if(IsSubLess((ptr->left),ptr->data)&&
+    IsSubGreater((ptr->right),ptr->data) &&
+    IsBST(ptr->left)&&
+    IsBST(ptr->right) ){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+int IsSubLess(struct BstNode *ptr,int data){
+    if(ptr == NULL){
+        return 1;
+    }
+    if(ptr -> data <= data &&
+    IsSubLess(ptr->left,data)&&
+    IsSubLess(ptr->right,data)){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+int IsSubGreater(struct BstNode *ptr,int data){
+    if(ptr == NULL){
+        return 1;
+    }
+    if(ptr -> data > data &&
+    IsSubLess(ptr->left,data)&&
+    IsSubLess(ptr->right,data)){
+        return 1;
+    }else{
+        return 0;
+    }
 }
