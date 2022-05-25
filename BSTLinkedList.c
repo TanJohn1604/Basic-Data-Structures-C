@@ -71,9 +71,9 @@ void inorder(struct BstNode *ptr){
     if(ptr==NULL){
         return;
     }
-    preorder(ptr->left);
+    inorder(ptr->left);
     printf("%d ",ptr->data);
-    preorder(ptr->right);
+    inorder(ptr->right);
 }
 void postorder(struct BstNode *ptr){
     if(ptr==NULL){
