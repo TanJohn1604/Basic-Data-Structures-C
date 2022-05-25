@@ -20,6 +20,9 @@ void postorder(struct BstNode *ptr);
 int IsBST(struct BstNode *ptr);
 int IsSubLess(struct BstNode *ptr,int data);
 int IsSubGreater(struct BstNode *ptr,int data);
+struct Node *Delelete(struct BstNode * ptr,int data);
+struct BstNode* FindMin(struct BstNode* root);
+
 
 int main(){
     struct BstNode *p_head=NULL;
@@ -29,7 +32,11 @@ int main(){
     printf("true or false %d",IsBST(p_head));
     return 1;
 }
-
+struct BstNode* FindMin(struct BstNode* root)
+{
+    while(root->left != NULL) root = root->left;
+    return root;
+}
 void insert(struct BstNode **ptr, int data){
     if(*ptr==NULL){
         newnode(ptr,data);
@@ -113,4 +120,35 @@ int IsSubGreater(struct BstNode *ptr,int data){
     }else{
         return 0;
     }
+}
+struct Node* Delete(struct BstNode *root, int data) {
+    if(root == NULL) return root; 
+    else if(data < root->data) root->left = Delete(root->left,data);
+    else if (data > root->data) root->right = Delete(root->right,data);
+    // Wohoo... I found you, Get ready to be deleted	
+    else {
+        // Case 1:  No child
+        if(root->left == NULL && root->right == NULL) { 
+            free(root);
+            root = NULL;
+        }
+        //Case 2: One child 
+        else if(root->left == NULL) {
+            struct Node *temp = root;
+            root = root->right;
+            free(temp);
+        }
+        else if(root->right == NULL) {
+            struct Node *temp = root;
+            root = root->left;
+            free(temp);
+        }
+        // case 3: 2 children
+        else { 
+            struct BstNode *temp = FindMin(root->right);
+            root->data = temp->data;
+            root->right = Delete(root->right,temp->data);
+        }
+    }
+    return root;
 }
