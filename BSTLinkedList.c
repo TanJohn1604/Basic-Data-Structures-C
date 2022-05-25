@@ -20,7 +20,7 @@ void postorder(struct BstNode *ptr);
 int IsBST(struct BstNode *ptr);
 int IsSubLess(struct BstNode *ptr,int data);
 int IsSubGreater(struct BstNode *ptr,int data);
-struct Node *Delelete(struct BstNode * ptr,int data);
+struct BstNode *Delelete(struct BstNode * ptr,int data);
 struct BstNode* FindMin(struct BstNode* root);
 
 
@@ -29,7 +29,7 @@ int main(){
     insert(&p_head,10);
     insert(&p_head,8);
     insert(&p_head,9);
-    printf("true or false %d",IsBST(p_head));
+    inorder(p_head);
     return 1;
 }
 struct BstNode* FindMin(struct BstNode* root)
@@ -121,7 +121,7 @@ int IsSubGreater(struct BstNode *ptr,int data){
         return 0;
     }
 }
-struct Node* Delete(struct BstNode *root, int data) {
+struct BstNode* Delete(struct BstNode *root, int data) {
     if(root == NULL) return root; 
     else if(data < root->data) root->left = Delete(root->left,data);
     else if (data > root->data) root->right = Delete(root->right,data);
@@ -134,12 +134,12 @@ struct Node* Delete(struct BstNode *root, int data) {
         }
         //Case 2: One child 
         else if(root->left == NULL) {
-            struct Node *temp = root;
+            struct BstNode *temp = root;
             root = root->right;
             free(temp);
         }
         else if(root->right == NULL) {
-            struct Node *temp = root;
+            struct BstNode *temp = root;
             root = root->left;
             free(temp);
         }
